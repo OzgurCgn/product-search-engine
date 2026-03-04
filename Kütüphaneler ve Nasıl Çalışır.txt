@@ -1,0 +1,79 @@
+🔧 GEREKLİ KÜTÜPHANELER VE AÇIKLAMALARI
+
+1. **pandas**
+   - CSV dosyasından ürün verilerini okumak ve işlemek için kullanılır.
+   - Kullanıldığı yer: Verisetini okuyup TF-IDF işlemlerinde veri çerçevesi sağlar.
+
+2. **scikit-learn (sklearn)** — `TfidfVectorizer`
+   - Ürün açıklamalarını vektörleştirmek için TF-IDF algoritması uygulanır.
+   - Kullanıldığı yer: Arama sisteminin temel vektör modelini oluşturur.
+
+3. **pickle**
+   - TF-IDF modeli ve işlenmiş verilerin `.pkl` dosyaları olarak kaydedilmesini ve yüklenmesini sağlar.
+
+4. **qdrant-client**
+   - Vektörleri saklamak ve hızlı benzerlik araması yapmak için kullanılan vektör veri tabanına bağlantı sağlar.
+   - Kullanıldığı yer: Ürün vektörleri Qdrant üzerinde saklanır ve arama burada yapılır.
+
+5. **fastapi**
+   - Arka uç (backend) için REST API kurulumunu sağlar.
+   - Kullanıldığı yer: `/search` endpoint’i ile frontend’e veri sunar.
+
+6. **streamlit**
+   - Kullanıcı dostu bir arayüz oluşturarak kullanıcıdan sorgu alır ve sonuçları görsel olarak listeler.
+
+7. **requests**
+   - Streamlit uygulaması, FastAPI backend’e HTTP üzerinden istek göndermek için kullanır.
+
+8. **CORS Middleware (fastapi.middleware.cors)**
+   - Frontend’in backend ile etkileşime geçmesini sağlayan güvenlik yapılandırmasıdır.
+
+-------------------------------------------
+
+📦 KURULUM TALİMATLARI
+
+Aşağıdaki komutları terminalde çalıştırarak gerekli tüm kütüphaneleri yükleyebilirsiniz:
+
+pip install pandas scikit-learn streamlit fastapi "uvicorn[standard]" qdrant-client requests
+
+Alternatif olarak bir `requirements.txt` dosyası oluşturup şu içeriği yazabilirsiniz:
+
+pandas
+scikit-learn
+streamlit
+fastapi
+uvicorn[standard]
+qdrant-client
+requests
+
+Ve ardından şu komutla kurulum yapabilirsiniz:
+
+pip install -r requirements.txt
+
+-------------------------------------------
+
+🚀 PROJENİN ÇALIŞTIRILMASI
+
+1. **Qdrant’ı başlatın:**  
+   Eğer Docker kullanıyorsanız:  
+   docker run -p 6333:6333 qdrant/qdrant
+
+2. **Veriyi yükleyin (isteğe bağlı):**  
+   TF-IDF vektörlerini ve ürünleri Qdrant’a yüklemek için:
+   ```bash
+   python vector_uploader.py
+   ```
+
+3. **Backend’i çalıştırın:**  
+   ```bash
+   uvicorn app:app --reload
+   ```
+
+4. **Frontend’i başlatın:**  
+   ```bash
+   streamlit run app.py
+   ```
+
+5. **Tarayıcıdan erişin:**  
+   - FastAPI dokümantasyonu için: [http://localhost:8000/docs](http://localhost:8000/docs)  
+   - Kullanıcı arayüzü (Streamlit): [http://localhost:8501](http://localhost:8501)
